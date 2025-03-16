@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>org.douglm</groupId>
-  <artifactId>raspi-parent</artifactId>
+  <artifactId>r-pi-parent</artifactId>
   <version>1-SNAPSHOT</version>
 
   <packaging>pom</packaging>
@@ -24,4 +24,830 @@
     <tag>HEAD</tag>
   </scm>
 
-<project>
+  <developers>
+    <developer>
+      <name>Mike Douglass</name>
+      <organization>
+        Bedework Commercial Services
+      </organization>
+      <organizationUrl>https://bedework.com/</organizationUrl>
+    </developer>
+  </developers>
+
+  <licenses>
+    <license>
+      <name>Apache License Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
+    </license>
+  </licenses>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+    <!-- maven-compiler-plugin -->
+    <maven.compiler.target>21</maven.compiler.target>
+    <maven.compiler.source>21</maven.compiler.source>
+    <maven.compiler.testTarget>${maven.compiler.target}</maven.compiler.testTarget>
+    <maven.compiler.testSource>${maven.compiler.source}</maven.compiler.testSource>
+
+    <!-- Maven Plugin Versions -->
+    <version.appassembler.plugin>2.1.0</version.appassembler.plugin>
+    <version.assembly.plugin>3.7.1</version.assembly.plugin>
+    <version.buildhelper.plugin>3.6.0</version.buildhelper.plugin>
+    <version.buildhelper.plugin>3.6.0</version.buildhelper.plugin>
+    <version.buildnumber.plugin>3.2.1</version.buildnumber.plugin>
+    <version.central-publishing.plugin>0.7.0</version.central-publishing.plugin>
+    <version.clean.plugin>3.4.0</version.clean.plugin>
+    <version.compiler.plugin>3.13.0</version.compiler.plugin>
+    <version.copy-rename.plugin>1.0.1</version.copy-rename.plugin>
+    <version.dependency.plugin>3.8.1</version.dependency.plugin>
+    <version.dependency.check.plugin>12.0.2</version.dependency.check.plugin>
+    <version.deploy.plugin>3.1.3</version.deploy.plugin>
+    <version.enforcer.plugin>3.5.0</version.enforcer.plugin>
+    <version.exec.plugin>3.5.0</version.exec.plugin>
+    <version.flatten.plugin>1.6.0</version.flatten.plugin>
+    <version.gpg.plugin>3.2.7</version.gpg.plugin>
+    <version.help.plugin>3.5.1</version.help.plugin>
+    <version.install.plugin>3.1.3</version.install.plugin>
+    <version.jar.plugin>3.4.2</version.jar.plugin>
+    <version.javadoc.plugin>3.11.1</version.javadoc.plugin>
+    <version.plugin.plugin>3.15.1</version.plugin.plugin>
+    <version.release.plugin>3.1.1</version.release.plugin>
+    <version.resources.plugin>3.3.1</version.resources.plugin>
+    <version.source.plugin>3.2.1</version.source.plugin>
+    <version.surefire.plugin>3.5.2</version.surefire.plugin>
+    <version.versions.plugin>2.17.1</version.versions.plugin>
+    <version.war.plugin>3.4.0</version.war.plugin>
+
+    <version.org.wildfly.galleon-plugins>7.3.1.Final</version.org.wildfly.galleon-plugins>
+
+    <wildfly.core.version>27.0.1.Final</wildfly.core.version>
+    <wildfly.common.version>1.7.0.Final</wildfly.common.version>
+    <wildfly.version>35.0.1.Final</wildfly.version>
+    <undertow.version>2.3.18.Final</undertow.version>
+
+    <!-- Repository Deployment URLs -->
+    <r-pi.releases.repo.id>central</r-pi.releases.repo.id>
+    <r-pi.releases.repo.url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</r-pi.releases.repo.url>
+    <r-pi.snapshots.repo.id>central</r-pi.snapshots.repo.id>
+    <r-pi.snapshots.repo.url>https://central.sonatype.com/repository/maven-snapshots/</r-pi.snapshots.repo.url>
+
+    <!--
+        Options to override the compiler arguments directly on the compiler argument line to separate between what
+        the IDE understands as the source level and what the Maven compiler actually use.
+    -->
+    <maven.compiler.argument.showDeprecation>false</maven.compiler.argument.showDeprecation>
+    <maven.compiler.argument.showWarnings>false</maven.compiler.argument.showWarnings>
+
+    <maven.compiler.argument.target>${maven.compiler.target}</maven.compiler.argument.target>
+    <maven.compiler.argument.source>${maven.compiler.source}</maven.compiler.argument.source>
+    <maven.compiler.argument.testTarget>${maven.compiler.testTarget}</maven.compiler.argument.testTarget>
+    <maven.compiler.argument.testSource>${maven.compiler.testSource}</maven.compiler.argument.testSource>
+
+    <!-- maven-enforcer-plugin -->
+    <maven.min.version>3.6.3</maven.min.version>
+    <jdk.min.version>${maven.compiler.argument.source}</jdk.min.version>
+    <insecure.repositories>ERROR</insecure.repositories>
+
+    <!-- maven-idea-plugin -->
+    <downloadSources>true</downloadSources>
+
+    <!-- exposed additional params for javadoc, such as Xlint -->
+    <javadoc.additional.params />
+
+    <!-- Placeholder tooverride -->
+    <org.bedework.war.dependency />
+
+    <!-- Library versions
+         Third party libraries we depend on.
+    -->
+    <ant.contrib.version>1.0b3</ant.contrib.version>
+
+    <!-- test only -->
+    <junit.version>5.10.3</junit.version>
+    <junit-console.version>1.10.3</junit-console.version>
+
+    <pi4j.version>3.0.0-SNAPSHOT</pi4j.version>
+
+    <slf4j.version>2.0.16</slf4j.version>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>com.pi4j</groupId>
+        <artifactId>pi4j-core</artifactId>
+        <version>${pi4j.version}</version>
+      </dependency>
+
+      <!-- include Pi4J Plugins (Platforms and I/O Providers) -->
+      <dependency>
+        <groupId>com.pi4j</groupId>
+        <artifactId>pi4j-plugin-raspberrypi</artifactId>
+        <version>${pi4j.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.pi4j</groupId>
+        <artifactId>pi4j-plugin-gpiod</artifactId>
+        <version>${pi4j.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.pi4j</groupId>
+        <artifactId>pi4j-plugin-linuxfs</artifactId>
+        <version>${pi4j.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>${slf4j.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-simple</artifactId>
+        <version>${slf4j.version}</version>
+      </dependency>
+
+    </dependencies>
+  </dependencyManagement>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.bedework</groupId>
+          <artifactId>bw-util-maven-deploy</artifactId>
+          <version>${bw-util-deploy.version}</version>
+
+          <executions>
+            <execution>
+              <phase>install</phase>
+              <goals>
+                <goal>bw-deploy</goal>
+              </goals>
+            </execution>
+          </executions>
+          <configuration>
+            <checkonly>${org.bedework.deploy.checkonly}</checkonly>
+            <noversion>true</noversion>
+            <delete>true</delete>
+          </configuration>
+        </plugin>
+
+        <plugin>
+          <groupId>org.bedework</groupId>
+          <artifactId>bw-util-maven-deploy-wfmodule</artifactId>
+          <version>${bw-util-deploy.version}</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.wildfly.galleon-plugins</groupId>
+          <artifactId>wildfly-galleon-maven-plugin</artifactId>
+          <version>${version.org.wildfly.galleon-plugins}</version>
+
+          <executions>
+            <execution>
+              <id>galleon-pack-build</id>
+              <goals>
+                <goal>build-feature-pack</goal>
+              </goals>
+              <phase>package</phase>
+            </execution>
+          </executions>
+        </plugin>
+
+        <plugin>
+          <groupId>org.owasp</groupId>
+          <artifactId>dependency-check-maven</artifactId>
+          <version>${version.dependency.check.plugin}</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-antrun-plugin</artifactId>
+          <version>${version.antrun.plugin}</version>
+          <dependencies>
+            <dependency>
+              <groupId>ant-contrib</groupId>
+              <artifactId>ant-contrib</artifactId>
+              <version>${ant.contrib.version}</version>
+
+              <exclusions>
+                <exclusion>
+                  <groupId>ant</groupId>
+                  <artifactId>ant</artifactId>
+                </exclusion>
+              </exclusions>
+            </dependency>
+          </dependencies>
+        </plugin>
+
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>appassembler-maven-plugin</artifactId>
+          <version>1.10</version>
+          <executions>
+            <execution>
+              <id>buildapp</id>
+              <phase>package</phase>
+              <goals>
+                <goal>assemble</goal>
+              </goals>
+            </execution>
+          </executions>
+          <configuration>
+            <!-- Set the target configuration directory to be used in the bin scripts -->
+            <configurationDirectory>conf</configurationDirectory>
+            <!-- Copy the contents from "/src/main/config" to the target
+                 configuration directory in the assembled application -->
+            <copyConfigurationDirectory>true</copyConfigurationDirectory>
+            <!-- Include the target configuration directory in the beginning of
+                 the classpath declaration in the bin scripts -->
+            <includeConfigurationDirectoryInClasspath>true</includeConfigurationDirectoryInClasspath>
+            <!-- set alternative assemble directory
+            <assembleDirectory>${project.build.directory}/xxx</assembleDirectory>
+             -->
+            <!-- Extra JVM arguments that will be included in the bin scripts
+            <extraJvmArguments>-Xms128m</extraJvmArguments> -->
+            <!-- Generate bin scripts for windows and unix pr default -->
+            <repositoryLayout>flat</repositoryLayout>
+            <platforms>
+              <platform>windows</platform>
+              <platform>unix</platform>
+            </platforms>
+          </configuration>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-assembly-plugin</artifactId>
+          <version>${version.assembly.plugin}</version>
+
+          <executions>
+            <execution>
+              <id>assembly</id>
+              <phase>package</phase>
+              <goals>
+                <goal>single</goal>
+              </goals>
+              <configuration>
+                <appendAssemblyId>false</appendAssemblyId>
+                <descriptors>
+                  <descriptor>src/assembly/module.xml</descriptor>
+                </descriptors>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>build-helper-maven-plugin</artifactId>
+          <version>${version.buildhelper.plugin}</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-clean-plugin</artifactId>
+          <version>${version.clean.plugin}</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>${version.compiler.plugin}</version>
+          <configuration>
+            <showDeprecation>${maven.compiler.argument.showDeprecation}</showDeprecation>
+            <showWarnings>${maven.compiler.argument.showWarnings}</showWarnings>
+            <source>${maven.compiler.argument.source}</source>
+            <target>${maven.compiler.argument.target}</target>
+            <testSource>${maven.compiler.argument.testSource}</testSource>
+            <testTarget>${maven.compiler.argument.testTarget}</testTarget>
+            <compilerArgs>
+              <!--              <arg>-Xlint:unchecked</arg>
+              -->
+            </compilerArgs>
+          </configuration>
+        </plugin>
+
+        <plugin>
+          <groupId>com.coderplus.maven.plugins</groupId>
+          <artifactId>copy-rename-maven-plugin</artifactId>
+          <version>${version.copy-rename.plugin}</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-dependency-plugin</artifactId>
+          <version>${version.dependency.plugin}</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <version>${version.deploy.plugin}</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-enforcer-plugin</artifactId>
+          <version>${version.enforcer.plugin}</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>exec-maven-plugin</artifactId>
+          <version>${version.exec.plugin}</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-gpg-plugin</artifactId>
+          <version>${version.gpg.plugin}</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-help-plugin</artifactId>
+          <version>${version.help.plugin}</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-install-plugin</artifactId>
+          <version>${version.install.plugin}</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>${version.jar.plugin}</version>
+          <configuration>
+            <archive>
+              <index>true</index>
+              <manifest>
+                <addDefaultSpecificationEntries>
+                  true
+                </addDefaultSpecificationEntries>
+                <addDefaultImplementationEntries>
+                  true
+                </addDefaultImplementationEntries>
+              </manifest>
+              <manifestEntries>
+                <Implementation-URL>${project.url}</Implementation-URL>
+                <Java-Version>${java.version}</Java-Version>
+                <Java-Vendor>${java.vendor}</Java-Vendor>
+                <Os-Name>${os.name}</Os-Name>
+                <Os-Arch>${os.arch}</Os-Arch>
+                <Os-Version>${os.version}</Os-Version>
+                <Scm-Url>${project.scm.url}</Scm-Url>
+                <Scm-Connection>${project.scm.connection}</Scm-Connection>
+                <Scm-Revision>${buildNumber}</Scm-Revision>
+              </manifestEntries>
+            </archive>
+          </configuration>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>${version.javadoc.plugin}</version>
+          <executions>
+            <execution>
+              <id>attach-javadocs</id>
+              <goals>
+                <goal>jar</goal>
+              </goals>
+              <configuration>
+                <header><![CDATA[<b>${project.name} ${project.version}</b>]]></header>
+                <footer><![CDATA[<b>${project.name} ${project.version}</b>]]></footer>
+                <archive>
+                  <index>true</index>
+                  <manifest>
+                    <addDefaultSpecificationEntries>
+                      true
+                    </addDefaultSpecificationEntries>
+                    <addDefaultImplementationEntries>
+                      true
+                    </addDefaultImplementationEntries>
+                  </manifest>
+                  <manifestEntries>
+                    <Implementation-URL>${project.url}</Implementation-URL>
+                    <Java-Version>${java.version}</Java-Version>
+                    <Java-Vendor>${java.vendor}</Java-Vendor>
+                    <Os-Name>${os.name}</Os-Name>
+                    <Os-Arch>${os.arch}</Os-Arch>
+                    <Os-Version>${os.version}</Os-Version>
+                    <Scm-Url>${project.scm.url}</Scm-Url>
+                    <Scm-Connection>${project.scm.connection}</Scm-Connection>
+                    <Scm-Revision>${buildNumber}</Scm-Revision>
+                  </manifestEntries>
+                </archive>
+
+                <additionalOptions>${javadoc.additional.params}</additionalOptions>
+                <additionalJOption>-Xdoclint:none</additionalJOption>
+                <failOnError>false</failOnError>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-plugin-plugin</artifactId>
+          <version>${version.plugin.plugin}</version>
+          <executions>
+            <execution>
+              <id>default-descriptor</id>
+              <phase>process-classes</phase>
+            </execution>
+
+            <execution>
+              <id>help-goal</id>
+              <goals>
+                <goal>helpmojo</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-release-plugin</artifactId>
+          <version>${version.release.plugin}</version>
+          <configuration>
+            <autoVersionSubmodules>true</autoVersionSubmodules>
+            <useReleaseProfile>false</useReleaseProfile>
+            <releaseProfiles>r-pi-rel,bedework-local</releaseProfiles>
+          </configuration>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>${version.resources.plugin}</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-source-plugin</artifactId>
+          <version>${version.source.plugin}</version>
+          <executions>
+            <execution>
+              <id>attach-sources</id>
+              <phase>verify</phase>
+              <goals>
+                <goal>jar-no-fork</goal>
+              </goals>
+              <configuration>
+                <archive>
+                  <index>true</index>
+                  <manifest>
+                    <addDefaultSpecificationEntries>
+                      true
+                    </addDefaultSpecificationEntries>
+                    <addDefaultImplementationEntries>
+                      true
+                    </addDefaultImplementationEntries>
+                  </manifest>
+                  <manifestEntries>
+                    <Implementation-URL>${project.url}</Implementation-URL>
+                    <Java-Version>${java.version}</Java-Version>
+                    <Java-Vendor>${java.vendor}</Java-Vendor>
+                    <Os-Name>${os.name}</Os-Name>
+                    <Os-Arch>${os.arch}</Os-Arch>
+                    <Os-Version>${os.version}</Os-Version>
+                    <Scm-Url>${project.scm.url}</Scm-Url>
+                    <Scm-Connection>${project.scm.connection}</Scm-Connection>
+                    <Scm-Revision>${buildNumber}</Scm-Revision>
+                  </manifestEntries>
+                </archive>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>${version.surefire.plugin}</version>
+          <dependencies>
+            <dependency>
+              <groupId>org.junit.jupiter</groupId>
+              <artifactId>junit-jupiter-engine</artifactId>
+              <version>${junit.version}</version>
+            </dependency>
+          </dependencies>
+          <configuration>
+            <trimStackTrace>false</trimStackTrace>
+            <systemPropertyVariables>
+              <java.io.tmpdir>${project.build.directory}</java.io.tmpdir>
+            </systemPropertyVariables>
+          </configuration>
+        </plugin>
+
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>versions-maven-plugin</artifactId>
+          <version>${version.versions.plugin}</version>
+          <configuration>
+            <generateBackupPoms>false</generateBackupPoms>
+          </configuration>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-war-plugin</artifactId>
+          <version>${version.war.plugin}</version>
+          <configuration>
+            <packagingExcludes>WEB-INF/lib/*.jar</packagingExcludes>
+            <filteringDeploymentDescriptors>true</filteringDeploymentDescriptors>
+
+            <archive>
+              <index>true</index>
+
+              <manifest>
+                <addDefaultSpecificationEntries>
+                  true
+                </addDefaultSpecificationEntries>
+                <addDefaultImplementationEntries>
+                  true
+                </addDefaultImplementationEntries>
+              </manifest>
+
+              <manifestEntries>
+                <Implementation-URL>${project.url}</Implementation-URL>
+                <Java-Version>${java.version}</Java-Version>
+                <Java-Vendor>${java.vendor}</Java-Vendor>
+                <Os-Name>${os.name}</Os-Name>
+                <Os-Arch>${os.arch}</Os-Arch>
+                <Os-Version>${os.version}</Os-Version>
+                <Scm-Url>${project.scm.url}</Scm-Url>
+                <Scm-Connection>${project.scm.connection}</Scm-Connection>
+                <Scm-Revision>${buildNumber}</Scm-Revision>
+                <Dependencies>${org.bedework.war.dependency}</Dependencies>
+              </manifestEntries>
+            </archive>
+            <failOnMissingWebXml>false</failOnMissingWebXml>
+          </configuration>
+        </plugin>
+
+        <plugin>
+          <groupId>org.sonatype.central</groupId>
+          <artifactId>central-publishing-maven-plugin</artifactId>
+          <version>${version.central-publishing.plugin}</version>
+          <extensions>true</extensions>
+          <configuration>
+            <publishingServerId>central</publishingServerId>
+          </configuration>
+        </plugin>
+
+        <!-- Check for the minimum version of Java and Maven.  Runs during the validate phase. -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-enforcer-plugin</artifactId>
+          <version>${version.enforcer.plugin}</version>
+          <executions>
+            <execution>
+              <id>enforce-java-version</id>
+              <goals>
+                <goal>enforce</goal>
+              </goals>
+              <configuration>
+                <rules>
+                  <bannedRepositories>
+                    <message>To build this project, don't use maven repositories over HTTP. Please use HTTPS in your settings.xml or run the build with property insecure.repositories=WARN</message>
+                    <level>${insecure.repositories}</level>
+                    <bannedRepositories>
+                      <bannedRepository>http://*</bannedRepository>
+                    </bannedRepositories>
+                    <bannedPluginRepositories>
+                      <bannedPluginRepository>http://*</bannedPluginRepository>
+                    </bannedPluginRepositories>
+                  </bannedRepositories>
+                  <requireJavaVersion>
+                    <message>To build this project JDK ${jdk.min.version} (or greater) is required. Please install it.</message>
+                    <version>${jdk.min.version}</version>
+                  </requireJavaVersion>
+                </rules>
+              </configuration>
+            </execution>
+
+            <execution>
+              <id>enforce-maven-version</id>
+              <goals>
+                <goal>enforce</goal>
+              </goals>
+              <configuration>
+                <rules>
+                  <requireMavenVersion>
+                    <message>To build this project Maven ${maven.min.version} (or greater) is required. Please install it.</message>
+                    <version>${maven.min.version}</version>
+                  </requireMavenVersion>
+                </rules>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+
+        <!-- Set properties containing the scm revision -->
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>buildnumber-maven-plugin</artifactId>
+          <version>${version.buildnumber.plugin}</version>
+          <executions>
+            <execution>
+              <id>get-scm-revision</id>
+              <phase>initialize</phase>
+              <goals>
+                <goal>create</goal>
+              </goals>
+              <configuration>
+                <doCheck>false</doCheck>
+                <doUpdate>false</doUpdate>
+                <revisionOnScmFailure>UNKNOWN</revisionOnScmFailure>
+                <getRevisionOnlyOnce>true</getRevisionOnlyOnce>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>flatten-maven-plugin</artifactId>
+
+          <configuration>
+            <flattenMode>ossrh</flattenMode>
+            <outputDirectory>${project.build.directory}</outputDirectory>
+          </configuration>
+
+          <executions>
+            <!-- enable flattening -->
+            <execution>
+              <id>flatten</id>
+              <phase>process-resources</phase>
+              <goals>
+                <goal>flatten</goal>
+              </goals>
+            </execution>
+            <!-- ensure proper cleanup -->
+            <execution>
+              <id>flatten.clean</id>
+              <phase>clean</phase>
+              <goals>
+                <goal>clean</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+
+      </plugins>
+    </pluginManagement>
+  </build>
+
+
+  <profiles>
+    <profile>
+      <id>release</id>
+      <!--
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation> -->
+
+      <build>
+        <plugins>
+          <!-- Attach source jar to all builds.  Runs during the package phase.-->
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+            <version>${version.source.plugin}</version>
+            <executions>
+              <execution>
+                <id>attach-sources</id>
+                <goals>
+                  <goal>jar-no-fork</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>${version.gpg.plugin}</version>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+
+          <plugin>
+            <artifactId>maven-javadoc-plugin</artifactId>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <!--
+    bw-util-annotations/pom.xml:11:  <version>1.0.0-SNAPSHOT</version>
+    -->
+    <profile>
+      <id>r-pi-dev</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <properties>
+        <r-pi-heatingMonitor.version>1.0.0-SNAPSHOT</r-pi-heatingMonitor.version>
+      </properties>
+    </profile>
+
+    <profile>
+      <id>r-pi-rel</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <r-pi-heatingMonitor.version>1.0.0</r-pi-heatingMonitor.version>
+      </properties>
+    </profile>
+  </profiles>
+  <!--
+    <repositories>
+      <repository>
+        <id>oss-snapshots-repo</id>
+        <name>Sonatype OSS Maven Repository</name>
+        <url>https://oss.sonatype.org/content/groups/public</url>
+        <releases>
+          <enabled>false</enabled>
+        </releases>
+        <snapshots>
+          <enabled>true</enabled>
+        </snapshots>
+      </repository>
+    </repositories>-->
+
+  <repositories>
+    <repository>
+      <releases>
+        <enabled>false</enabled>
+        <updatePolicy>never</updatePolicy>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+        <updatePolicy>never</updatePolicy>
+      </snapshots>
+      <id>${r-pi.snapshots.repo.id}</id>
+      <name>r-pi Snapshots Repository</name>
+      <url>${r-pi.snapshots.repo.url}</url>
+      <layout>default</layout>
+    </repository>
+    <repository>
+      <id>oss-snapshots-repo</id>
+      <name>Sonatype OSS Maven Repository</name>
+      <url>https://oss.sonatype.org/content/groups/public</url>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>  </repositories>
+
+
+  <!-- Some plugins are available in the jboss repository only -->
+  <pluginRepositories>
+    <pluginRepository>
+      <id>jboss-public-repository</id>
+      <name>JBoss Public Maven Repository</name>
+      <url>https://repository.jboss.org/nexus/content/groups/public/</url>
+      <layout>default</layout>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </pluginRepository>
+  </pluginRepositories>
+
+  <distributionManagement>
+    <repository>
+      <id>${r-pi.releases.repo.id}</id>
+      <name>r-pi Releases Repository</name>
+      <url>${r-pi.releases.repo.url}</url>
+    </repository>
+    <snapshotRepository>
+      <id>${r-pi.snapshots.repo.id}</id>
+      <name>r-pi Snapshots Repository</name>
+      <url>${r-pi.snapshots.repo.url}</url>
+    </snapshotRepository>
+  </distributionManagement>
+</project>
