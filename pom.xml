@@ -124,9 +124,13 @@
     -->
     <ant.contrib.version>1.0b3</ant.contrib.version>
 
+    <bw-util-logging.version>6.0.0-SNAPSHOT</bw-util-logging.version>
+
     <!-- test only -->
     <junit.version>5.10.3</junit.version>
     <junit-console.version>1.10.3</junit-console.version>
+
+    <log4j.version>2.23.1</log4j.version>
 
     <pi4j.version>3.0.0-SNAPSHOT</pi4j.version>
 
@@ -135,6 +139,19 @@
 
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>org.apache.logging.log4j</groupId>
+        <artifactId>log4j-api</artifactId>
+        <version>${log4j.version}</version>
+      </dependency>
+
+      <!-- Bedework: Logging -->
+      <dependency>
+        <groupId>org.bedework</groupId>
+        <artifactId>bw-util-logging</artifactId>
+        <version>${bw-util-logging.version}</version>
+      </dependency>
+
       <dependency>
         <groupId>com.pi4j</groupId>
         <artifactId>pi4j-core</artifactId>
