@@ -116,8 +116,12 @@
     <!-- exposed additional params for javadoc, such as Xlint -->
     <javadoc.additional.params />
 
-    <!-- Placeholder tooverride -->
+    <!-- Placeholder to override -->
     <org.bedework.war.dependency />
+
+    <!-- Versions for these projects -->
+    <pi-spi-support.version>1.0.0-SNAPSHOT</pi-spi-support.version>
+    <spi.version>1.0.0-SNAPSHOT</spi.version>
 
     <!-- Library versions
          Third party libraries we depend on.
@@ -141,6 +145,18 @@
 
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>org.douglm</groupId>
+        <artifactId>piSpiSupport</artifactId>
+        <version>${pi-spi-support.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.douglm</groupId>
+        <artifactId>spi</artifactId>
+        <version>${spi.version}</version>
+      </dependency>
+
       <dependency>
         <groupId>org.apache.logging.log4j</groupId>
         <artifactId>log4j-api</artifactId>
