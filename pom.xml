@@ -129,6 +129,7 @@
     <ant.contrib.version>1.0b3</ant.contrib.version>
 
     <bw-base.version>2.0.0-SNAPSHOT</bw-base.version>
+    <bw-util-misc.version>6.0.0-SNAPSHOT</bw-util-misc.version>
     <bw-util-logging.version>6.0.0-SNAPSHOT</bw-util-logging.version>
 
     <jackson.version>2.18.2</jackson.version>
@@ -180,6 +181,12 @@
         <groupId>org.bedework</groupId>
         <artifactId>bw-util-logging</artifactId>
         <version>${bw-util-logging.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.bedework</groupId>
+        <artifactId>bw-util-misc</artifactId>
+        <version>${bw-util-misc.version}</version>
       </dependency>
 
       <dependency>
@@ -856,6 +863,7 @@
       <url>${r-pi.snapshots.repo.url}</url>
       <layout>default</layout>
     </repository>
+
     <repository>
       <id>oss-snapshots-repo</id>
       <name>Sonatype OSS Maven Repository</name>
@@ -866,8 +874,8 @@
       <snapshots>
         <enabled>true</enabled>
       </snapshots>
-    </repository>  </repositories>
-
+    </repository>
+  </repositories>
 
   <!-- Some plugins are available in the jboss repository only -->
   <pluginRepositories>
