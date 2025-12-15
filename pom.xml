@@ -88,6 +88,7 @@
     <undertow.version>2.3.18.Final</undertow.version>
 
     <!-- Repository Deployment URLs -->
+    <maven.repository.url>https://repo1.maven.org/maven2/</maven.repository.url>
     <r-pi.releases.repo.id>central</r-pi.releases.repo.id>
     <r-pi.releases.repo.url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</r-pi.releases.repo.url>
     <r-pi.snapshots.repo.id>central</r-pi.snapshots.repo.id>
@@ -128,9 +129,10 @@
     -->
     <ant.contrib.version>1.0b3</ant.contrib.version>
 
-    <bw-base.version>2.0.0-SNAPSHOT</bw-base.version>
-    <bw-util-misc.version>6.0.0-SNAPSHOT</bw-util-misc.version>
-    <bw-util-logging.version>6.0.0-SNAPSHOT</bw-util-logging.version>
+    <bw-base.version>2.0.0</bw-base.version>
+    <bw-util-http.version>6.1.0</bw-util-http.version>
+    <bw-util-logging.version>6.0.0</bw-util-logging.version>
+    <bw-util-misc.version>6.0.0</bw-util-misc.version>
 
     <jackson.version>2.18.2</jackson.version>
     <!-- test only -->
@@ -174,6 +176,11 @@
         <groupId>org.bedework</groupId>
         <artifactId>bw-base</artifactId>
         <version>${bw-base.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.bedework</groupId>
+        <artifactId>bw-util-http</artifactId>
       </dependency>
 
       <!-- Bedework: Logging -->
@@ -849,6 +856,19 @@
     </repositories>-->
 
   <repositories>
+    <repository>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <id>maven-central</id>
+      <name>Maven Central Repository</name>
+      <url>${maven.repository.url}</url>
+      <layout>default</layout>
+    </repository>
+
     <repository>
       <releases>
         <enabled>false</enabled>
