@@ -181,6 +181,7 @@
       <dependency>
         <groupId>org.bedework</groupId>
         <artifactId>bw-util-http</artifactId>
+        <version>${bw-util-http.version}</version>
       </dependency>
 
       <!-- Bedework: Logging -->
