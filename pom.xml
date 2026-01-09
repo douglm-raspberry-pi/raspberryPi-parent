@@ -131,6 +131,7 @@
 
     <bw-base.version>2.0.0</bw-base.version>
     <bw-util-http.version>6.1.0</bw-util-http.version>
+    <bw-util-servlet.version>6.1.0</bw-util-servlet.version>
     <bw-util-logging.version>6.0.0</bw-util-logging.version>
     <bw-util-misc.version>6.0.0</bw-util-misc.version>
 
@@ -143,6 +144,7 @@
 
     <pi4j.version>3.0.0-SNAPSHOT</pi4j.version>
 
+    <servlet-api.version>6.0.0</servlet-api.version>
     <slf4j.version>2.0.16</slf4j.version>
   </properties>
 
@@ -182,6 +184,12 @@
         <groupId>org.bedework</groupId>
         <artifactId>bw-util-http</artifactId>
         <version>${bw-util-http.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.bedework</groupId>
+        <artifactId>bw-util-servlet</artifactId>
+        <version>${bw-util-servlet.version}</version>
       </dependency>
 
       <!-- Bedework: Logging -->
@@ -238,6 +246,13 @@
         <groupId>org.slf4j</groupId>
         <artifactId>slf4j-simple</artifactId>
         <version>${slf4j.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>jakarta.servlet</groupId>
+        <artifactId>jakarta.servlet-api</artifactId>
+        <version>${servlet-api.version}</version>
+        <scope>provided</scope>
       </dependency>
 
     </dependencies>
