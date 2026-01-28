@@ -132,7 +132,7 @@
     <bw-base.version>2.0.0</bw-base.version>
     <bw-util-deploy.version>6.0.0</bw-util-deploy.version>
     <bw-util-http.version>6.1.0</bw-util-http.version>
-    <bw-util-servlet.version>6.1.0</bw-util-servlet.version>
+    <bw-util-servlet.version>6.2.0-SNAPSHOT</bw-util-servlet.version>
     <bw-util-logging.version>6.0.0</bw-util-logging.version>
     <bw-util-misc.version>6.0.0</bw-util-misc.version>
 
@@ -190,6 +190,12 @@
       <dependency>
         <groupId>org.bedework</groupId>
         <artifactId>bw-util-servlet</artifactId>
+        <version>${bw-util-servlet.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.bedework</groupId>
+        <artifactId>bw-util-servlet-filters</artifactId>
         <version>${bw-util-servlet.version}</version>
       </dependency>
 
