@@ -136,6 +136,8 @@
     <bw-util-logging.version>6.0.0</bw-util-logging.version>
     <bw-util-misc.version>6.0.0</bw-util-misc.version>
 
+    <dom4j-version>2.1.4</dom4j-version>
+
     <jackson.version>2.18.2</jackson.version>
     <!-- test only -->
     <junit.version>5.10.3</junit.version>
@@ -144,6 +146,10 @@
     <log4j.version>2.23.1</log4j.version>
 
     <pi4j.version>3.0.3</pi4j.version>
+
+    <saxon-he.version>11.4</saxon-he.version>
+    <xmlresolver.version>4.4.3</xmlresolver.version>
+    <jdom.version>2.0.6.1</jdom.version>
 
     <servlet-api.version>6.0.0</servlet-api.version>
     <slf4j.version>2.0.16</slf4j.version>
@@ -213,6 +219,12 @@
       </dependency>
 
       <dependency>
+        <groupId>org.dom4j</groupId>
+        <artifactId>dom4j</artifactId>
+        <version>${dom4j-version}</version>
+      </dependency>
+
+      <dependency>
         <groupId>com.fasterxml.jackson.dataformat</groupId>
         <artifactId>jackson-dataformat-yaml</artifactId>
         <version>${jackson.version}</version>
@@ -244,9 +256,21 @@
       </dependency>
 
       <dependency>
+        <groupId>net.sf.saxon</groupId>
+        <artifactId>Saxon-HE</artifactId>
+        <version>${saxon-he.version}</version>
+      </dependency>
+
+      <dependency>
         <groupId>org.slf4j</groupId>
         <artifactId>slf4j-api</artifactId>
         <version>${slf4j.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.xmlresolver</groupId>
+        <artifactId>xmlresolver</artifactId>
+        <version>${xmlresolver.version}</version>
       </dependency>
 
       <dependency>
