@@ -139,6 +139,7 @@
     <dom4j-version>2.1.4</dom4j-version>
 
     <jackson.version>2.18.2</jackson.version>
+    <jsp-api.version>3.1.1</jsp-api.version>
     <!-- test only -->
     <junit.version>5.10.3</junit.version>
     <junit-console.version>1.10.3</junit-console.version>
@@ -205,6 +206,12 @@
         <version>${bw-util-servlet.version}</version>
       </dependency>
 
+      <dependency>
+        <groupId>org.bedework</groupId>
+        <artifactId>bw-util-servlet-jsp</artifactId>
+        <version>${bw-util-servlet.version}</version>
+      </dependency>
+
       <!-- Bedework: Logging -->
       <dependency>
         <groupId>org.bedework</groupId>
@@ -228,6 +235,13 @@
         <groupId>com.fasterxml.jackson.dataformat</groupId>
         <artifactId>jackson-dataformat-yaml</artifactId>
         <version>${jackson.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>jakarta.servlet.jsp</groupId>
+        <artifactId>jakarta.servlet.jsp-api</artifactId>
+        <version>${jsp-api.version}</version>
+        <scope>provided</scope>
       </dependency>
 
       <dependency>
